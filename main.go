@@ -40,8 +40,16 @@ type Relay struct {
 	ServerOwnership  string
 }
 
+// Caller interface defines the callApi method.
+type ApiCaller interface {
+	callApi(serverType string) []byte
+}
+
+// RealApiCaller struct implements the Caller interface.
+type RealApiCaller struct{}
+
 // callApi calls the Mullvad API and returns the response body.
-func callApi(serverType string) []byte {
+func (RealApiCaller) callApi(serverType string) []byte {
 	req, err := http.NewRequest("GET", ApiEndpoint+"/"+serverType, nil)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -125,8 +133,8 @@ func ping(relays *[]Relay) {
 }
 
 // get func gets the locations of the relays.
-func get(serverType string) []Relay {
-	res := callApi(serverType)
+func get(caller ApiCaller, serverType string) []Relay {
+	res := caller.callApi(serverType)
 	var relays []Relay
 	json.Unmarshal(res, &relays)
 	return relays
@@ -140,6 +148,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	relays := get(*serverType)
+	realCaller := RealApiCaller{}
+	relays := get(realCaller, *serverType)
 	ping(&relays)
 }
