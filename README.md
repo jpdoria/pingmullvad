@@ -5,13 +5,15 @@ Ping Mullvad servers. This tool is best run when not connected to the VPN.
 # Usage
 
 ```bash
-❯ chmod +x pingmullvad-arm64-0.1.0
-❯ ./pingmullvad-arm64-0.1.0 -help
+❯ chmod +x pingmullvad-arm64-0.2.0
+❯ ./pingmullvad-arm64-0.2.0 -help
+  -country string
+    	Country code: us, hk, jp, etc. (default "all")
   -type string
     	Server type: wireguard, openvpn, or bridge. (default "all")
   -version
     	Print the current version.
-❯ ./pingmullvad-arm64-0.1.0 -type=bridge
+❯ ./pingmullvad-arm64-0.2.0 -type=bridge
 pinging servers 100% |████████████████████████████████████████████████████████████████████████████████████████████████████████████| (27/27, 1 it/s)
 hostname          ip                  bandwidth     ownership            provider     city                   country            latency
 au-syd-br-001     146.70.141.154      10Gbps        Rented               M247         Sydney                 Australia          299.491ms
@@ -42,7 +44,3 @@ us-nyc-br-601     38.132.121.146      10Gbps        Rented               M247   
 us-rag-br-101     198.54.130.178      1Gbps         Rented               Tzulo        Raleigh, NC            USA                219.468ms
 us-slc-br-101     69.4.234.146        1Gbps         Rented               100TB        Salt Lake City, UT     USA                186.717ms
 ```
-
-# Screenshot
-
-![pingmullvad](pingmullvad.png)
