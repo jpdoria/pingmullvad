@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/tabwriter"
 	"time"
 
@@ -33,6 +34,7 @@ type PingModel interface {
 	pinger(relay *Relay) (time.Duration, error)
 	formatter(relay *Relay) string
 	showRelays() *[]Relay
+	filterRelaysByCountryCode(countryCode string) []Relay
 }
 
 // Ping struct contains the relay information and implements the PingModel interface.
@@ -83,6 +85,19 @@ func (p *Ping) pinger(relay *Relay) (time.Duration, error) {
 	return pr.Statistics().AvgRtt, nil
 }
 
+// filterRelaysByCountryCode func filters the relays by the country code.
+func (p *Ping) filterRelaysByCountryCode(countryCode string) []Relay {
+	var filtered []Relay
+	for _, relay := range *p.Relays {
+		if relay.CountryCode == countryCode {
+			filtered = append(filtered, relay)
+		}
+	}
+
+	return filtered
+}
+
+// showRelays func returns the relays.
 func (p *Ping) showRelays() *[]Relay {
 	return p.Relays
 }
@@ -90,6 +105,11 @@ func (p *Ping) showRelays() *[]Relay {
 // ping func pings the IP address of the relay.
 func ping(pm PingModel) {
 	relays := pm.showRelays()
+
+	// Filter the relays by country code.
+	if strings.ToLower(*countryCode) != "" && strings.ToLower(*countryCode) != "all" {
+		*relays = pm.filterRelaysByCountryCode(strings.ToLower(*countryCode))
+	}
 
 	// Create a progress bar to display the progress of the ping operation.
 	bar := progressbar.Default(int64(len(*relays)), "pinging servers")

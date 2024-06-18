@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	serverType = flag.String("type", "all", "Server type: wireguard, openvpn, or bridge.")
-	version    = flag.Bool("version", false, "Print the current version.")
-	ver, build string
+	serverType  = flag.String("type", "all", "Server type: wireguard, openvpn, or bridge.")
+	countryCode = flag.String("country", "all", "Country code: us, hk, jp, etc.")
+	version     = flag.Bool("version", false, "Print the current version.")
+	ver, build  string
 )
 
 // This function parses command line flags, retrieves server information from an API,
