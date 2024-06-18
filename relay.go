@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 	"text/tabwriter"
 	"time"
@@ -120,6 +121,7 @@ func ping(pm PingModel) {
 	color.New(color.FgWhite).Fprintln(w, "hostname\tip\tbandwidth\townership\tprovider\tcity\tcountry\tlatency")
 
 	// Ping each relay and display the results.
+	var newList []Relay
 	for _, relay := range *relays {
 		bar.Add(1)
 
@@ -146,8 +148,22 @@ func ping(pm PingModel) {
 			color.New(color.FgRed).Fprintln(w, msg)
 		} else if latency > 150.00*time.Millisecond {
 			color.New(color.FgYellow).Fprintln(w, msg)
+			newList = append(newList, relay)
 		} else if latency < 150.00*time.Millisecond && latency != 0 {
 			color.New(color.FgGreen).Fprintln(w, msg)
+			newList = append(newList, relay)
 		}
+	}
+
+	// Show the top 5 relays.
+	sort.Slice(newList, func(i, j int) bool {
+		return newList[i].Latency < newList[j].Latency
+	})
+	newList = newList[:5]
+	color.New(color.FgWhite).Fprintln(w, "\ntop 5 fastest servers:")
+	color.New(color.FgWhite).Fprintln(w, "hostname\tip\tbandwidth\townership\tprovider\tcity\tcountry\tlatency")
+	for _, relay := range newList {
+		msg := pm.formatter(&relay)
+		color.New(color.FgBlue).Fprintln(w, msg)
 	}
 }

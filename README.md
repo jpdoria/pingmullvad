@@ -5,42 +5,30 @@ Ping Mullvad servers. This tool is best run when not connected to the VPN.
 # Usage
 
 ```bash
-❯ chmod +x pingmullvad-arm64-0.2.0
-❯ ./pingmullvad-arm64-0.2.0 -help
+❯ chmod +x pingmullvad-arm64-0.3.0
+❯ ./pingmullvad-arm64-0.3.0 -help
   -country string
     	Country code: us, hk, jp, etc. (default "all")
   -type string
     	Server type: wireguard, openvpn, or bridge. (default "all")
   -version
     	Print the current version.
-❯ ./pingmullvad-arm64-0.2.0 -type=bridge
-pinging servers 100% |████████████████████████████████████████████████████████████████████████████████████████████████████████████| (27/27, 1 it/s)
-hostname          ip                  bandwidth     ownership            provider     city                   country            latency
-au-syd-br-001     146.70.141.154      10Gbps        Rented               M247         Sydney                 Australia          299.491ms
-ca-mtr-br-001     217.138.213.18      10Gbps        Rented               M247         Montreal               Canada             219.36ms
-ca-tor-br-101     198.44.140.226      10Gbps        Rented               Tzulo        Toronto                Canada             252.742ms
-ch-zrh-br-001     193.32.127.117      10Gbps        Owned by Mullvad     31173        Zurich                 Switzerland        311.357ms
-cz-prg-br-101     217.138.199.106     1Gbps         Rented               M247         Prague                 Czech Republic     319.682ms
-de-fra-br-001     185.213.155.117     20Gbps        Owned by Mullvad     31173        Frankfurt              Germany            296.225ms
-fi-hel-br-101     193.138.7.132       10Gbps        Owned by Mullvad     Blix         Helsinki               Finland            307.056ms
-fr-par-br-001     193.32.126.117      20Gbps        Owned by Mullvad     31173        Paris                  France             287.635ms
-gb-mnc-br-001     89.238.134.58       10Gbps        Rented               M247         Manchester             UK                 372.115ms
-hk-hkg-br-201     103.125.233.210     10Gbps        Rented               xtom         Hong Kong              Hong Kong          296.114ms
-jp-tyo-br-201     185.242.4.34        10Gbps        Rented               M247         Tokyo                  Japan              260.66ms
-nl-ams-br-001     185.65.134.116      10Gbps        Owned by Mullvad     31173        Amsterdam              Netherlands        Timeout
-no-osl-br-001     91.90.44.10         1Gbps         Owned by Mullvad     Blix         Oslo                   Norway             Timeout
-no-svg-br-001     194.127.199.245     10Gbps        Owned by Mullvad     Blix         Stavanger              Norway             299.788ms
-se-got-br-001     185.213.154.117     1Gbps         Owned by Mullvad     31173        Gothenburg             Sweden             295.054ms
-se-mma-br-001     193.138.218.71      10Gbps        Owned by Mullvad     31173        Malmö                  Sweden             288.806ms
-se-sto-br-001     185.65.135.115      1Gbps         Owned by Mullvad     31173        Stockholm              Sweden             295.196ms
-sg-sin-br-101     146.70.192.38       10Gbps        Rented               M247         Singapore              Singapore          Timeout
-us-atl-br-101     66.115.180.241      1Gbps         Rented               100TB        Atlanta, GA            USA                200.838ms
-us-chi-br-001     68.235.44.130       10Gbps        Rented               Tzulo        Chicago, IL            USA                205.869ms
-us-dal-br-101     174.127.113.18      1Gbps         Rented               100TB        Dallas, TX             USA                185.168ms
-us-lax-br-401     62.133.44.202       10Gbps        Rented               M247         Los Angeles, CA        USA                152.298ms
-us-mia-br-101     146.70.183.34       10Gbps        Rented               M247         Miami, FL              USA                211.515ms
-us-nyc-br-501     212.103.48.226      10Gbps        Rented               M247         New York, NY           USA                212.441ms
-us-nyc-br-601     38.132.121.146      10Gbps        Rented               M247         New York, NY           USA                213.193ms
-us-rag-br-101     198.54.130.178      1Gbps         Rented               Tzulo        Raleigh, NC            USA                219.468ms
-us-slc-br-101     69.4.234.146        1Gbps         Rented               100TB        Salt Lake City, UT     USA                186.717ms
-```
+❯ ./pingmullvad-arm64-0.3.0 -type=wireguard
+pinging servers 100% |█████████████████████████████████████████████████████████████████████████████████████████████████████████| (468/468, 58 it/min)
+hostname          ip                  bandwidth     ownership            provider          city                   country            latency
+al-tia-wg-001     31.171.153.66       10Gbps        Rented               iRegister         Tirana                 Albania            Timeout
+al-tia-wg-002     31.171.154.50       10Gbps        Rented               iRegister         Tirana                 Albania            272.593ms
+at-vie-wg-001     146.70.116.98       10Gbps        Rented               M247              Vienna                 Austria            536.601ms
+# truncated
+us-uyk-wg-103     173.205.85.34       10Gbps        Rented               Quadranet         Secaucus, NJ           USA                249.108ms
+za-jnb-wg-001     154.47.30.130       10Gbps        Rented               DataPacket        Johannesburg           South Africa       442.094ms
+za-jnb-wg-002     154.47.30.143       10Gbps        Rented               DataPacket        Johannesburg           South Africa       513.294ms
+
+top 5 fastest servers:
+hostname          ip                 bandwidth     ownership     provider       city          country       latency
+hk-hkg-wg-201     103.125.233.18     10Gbps        Rented        xtom           Hong Kong     Hong Kong     25.062ms
+hk-hkg-wg-202     103.125.233.3      10Gbps        Rented        xtom           Hong Kong     Hong Kong     27.091ms
+hk-hkg-wg-302     146.70.224.66      10Gbps        Rented        M247           Hong Kong     Hong Kong     30.737ms
+hk-hkg-wg-301     146.70.224.2       10Gbps        Rented        M247           Hong Kong     Hong Kong     31.124ms
+sg-sin-wg-002     138.199.60.15      10Gbps        Rented        DataPacket     Singapore     Singapore     35.619ms
+❯
