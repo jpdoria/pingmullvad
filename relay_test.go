@@ -6,6 +6,43 @@ import (
 	"time"
 )
 
+// TestFilterRelaysByCountryCode tests the filterRelaysByCountryCode method.
+func TestFilterRelaysByCountryCode(t *testing.T) {
+	// Create a Ping instance with some relays.
+	p := &Ping{
+		Relays: &[]Relay{
+			{CountryCode: "us"},
+			{CountryCode: "sg"},
+			{CountryCode: "hk"},
+			{CountryCode: "jp"},
+		},
+	}
+
+	// Call the function with the country code "us".
+	result := p.filterRelaysByCountryCode("us")
+
+	// Check that the result contains the correct relays.
+	if len(result) != 2 {
+		t.Errorf("Expected 2 relays, got %d", len(result))
+	}
+	for _, relay := range result {
+		if relay.CountryCode != "US" {
+			t.Errorf("Expected relay with country code 'us', got '%s'", relay.CountryCode)
+		}
+	}
+
+	// Call the function with the country code "sg".
+	result = p.filterRelaysByCountryCode("sg")
+
+	// Check that the result contains the correct relay.
+	if len(result) != 1 {
+		t.Errorf("Expected 1 relay, got %d", len(result))
+	}
+	if result[0].CountryCode != "hk" {
+		t.Errorf("Expected relay with country code 'hk', got '%s'", result[0].CountryCode)
+	}
+}
+
 // TestFormatter tests the formatter method.
 func TestFormatter(t *testing.T) {
 	p := &Ping{}
